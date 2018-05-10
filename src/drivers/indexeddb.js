@@ -664,7 +664,12 @@ function setItem(key, value, callback) {
 
                             resolve(value);
                         };
-                        transaction.onabort = transaction.onerror = function() {
+
+                        transaction.onerror = function() {
+                            reject(req.error);
+                        };
+
+                        transaction.onabort = function() {
                             var err = req.error
                                 ? req.error
                                 : req.transaction.error;
